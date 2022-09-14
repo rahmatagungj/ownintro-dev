@@ -21,7 +21,6 @@ class Ownintro {
       buttonFinishText: "Finish",
     }, options)
     this.#bodyClick = e => {
-      console.log(this.options)
       if (
         e.target === this.#currentStep.element ||
         this.#currentStep.element?.contains(e.target) ||
