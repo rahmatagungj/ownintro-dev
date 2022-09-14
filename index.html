@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="dist/ownintro.min.js"></script>
+    <title>Document</title>
+    <style>
+        #two {
+            position: absolute;
+            top: 50%;
+            margin: 1000px 0;
+        }
+        #three {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+        }
+    </style>
+</head>
+<body>
+<h1 class="title" id="one">OwnIntro V1</h1>
+<h4 id="two">
+    Kamu Cantik
+    </br>
+    Kamu Cantik
+    </br>
+    Kamu Cantik
+    </br>
+    Kamu Cantik
+    </br>
+    Kamu Cantik
+    </br>
+</h4>
+<div id="three">
+    Dia Jelek
+</div>
+</body>
+<script>
+  const intro = new Ownintro([
+    {
+      content: `<p style="margin: 0">Haloo ...</p>
+      <img src="https://www.rahmatagungjulians.tech/_next/image?url=%2Fstatic%2Fimages%2Fme.webp&w=384&q=75" alt="me" width="220" height="210">`,
+      element: document.getElementById("one"),
+    },
+    {
+      content: "HehehehHehehehHehehehHeheheh HehehehHehehehHehehehHeheheh",
+      element: document.getElementById("two"),
+    },
+      {
+        content: "waokwawa iyawaowawao waowakowa  kan",
+        element: document.getElementById("three"),
+      },
+  ],
+    {
+      buttonBackText: "Kembali",
+      buttonNextText: "Lanjut",
+      buttonFinishText: "Selesai",
+      hideOnClickOutside: false,
+      smoothMove: true,
+    }
+  )
+
+  setTimeout(() => {
+    intro.start()
+  }, 1000)
+</script>
+</html>
