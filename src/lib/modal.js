@@ -47,10 +47,6 @@ export default class Modal {
     document.body.append(this.#modal)
   }
 
-  set title(value) {
-    this.#title.innerText = value
-  }
-
   set content(value) {
     this.#content.innerHTML = value
   }
