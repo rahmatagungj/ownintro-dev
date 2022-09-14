@@ -9,17 +9,19 @@ class Ownintro {
   #modal
   #highlightContainer
   #bodyClick
+  #windowResize
 
-  constructor(steps, options = {
-    buttonBackText: "Back",
-    buttonNextText: "Next",
-    hideOnClickOutside: true,
-    smoothMove: true,
-    buttonFinishText: "Finish",
-  }) {
+  constructor(steps, options) {
     this.steps = steps
-    this.options = options
+    this.options = Object.assign({}, {
+      buttonBackText: "Back",
+      buttonNextText: "Next",
+      hideOnClickOutside: true,
+      smoothMove: true,
+      buttonFinishText: "Finish",
+    }, options)
     this.#bodyClick = e => {
+      console.log(this.options)
       if (
         e.target === this.#currentStep.element ||
         this.#currentStep.element?.contains(e.target) ||
@@ -30,7 +32,10 @@ class Ownintro {
         return
       }
 
-      if (options.hideOnClickOutside) this.finish()
+      if (this.options.hideOnClickOutside) this.finish()
+    }
+    this.#windowResize = e => {
+      this.repositionHighlightContainer()
     }
   }
 
@@ -60,15 +65,14 @@ class Ownintro {
       }
     )
     document.addEventListener("click", this.#bodyClick)
-    window.addEventListener('resize', () => {
-      this.repositionHighlightContainer()
-    })
+    window.addEventListener('resize', this.#windowResize)
     this.#highlightContainer = this.#createHighlightContainer()
     this.#showCurrentStep()
   }
 
   finish() {
     document.removeEventListener("click", this.#bodyClick)
+    document.removeEventListener("resize", this.#windowResize)
     this.#modal.remove()
     this.#highlightContainer.remove()
   }
@@ -78,7 +82,9 @@ class Ownintro {
   }
 
   repositionHighlightContainer() {
-    if (this.#currentStep.element == null) return
+    if (
+      this.#currentStep.element == null
+    ) return
 
     const rect = this.currentStepRect()
     this.highlightContainerSmooth(false)
