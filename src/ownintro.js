@@ -73,10 +73,14 @@ class Ownintro {
     this.#highlightContainer.remove()
   }
 
+  currentStepRect() {
+    return this.#currentStep.element.getBoundingClientRect()
+  }
+
   repositionHighlightContainer() {
     if (this.#currentStep.element == null) return
 
-    const rect = this.#currentStep.element.getBoundingClientRect()
+    const rect = this.currentStepRect()
     this.highlightContainerSmooth(false)
     this.modalSmooth(false)
     this.#positionHighlightContainer(rect)
@@ -115,16 +119,14 @@ class Ownintro {
   }
 
   #showCurrentStep() {
-    this.#modal.content = this.#currentStep.content ?? ""
     if (this.#currentStep.element == null) {
       this.#highlightContainer.classList.add("hide")
       this.#positionHighlightContainer({ x: 0, y: 0, width: 0, height: 0 })
       this.#modal.center()
     } else {
+      const rect = this.currentStepRect()
       this.#modal.center(false)
-      const rect = this.#currentStep.element.getBoundingClientRect()
       this.repositionModal(rect)
-
       this.#highlightContainer.classList.remove("hide")
       this.#positionHighlightContainer(rect)
       this.#currentStep.element.scrollIntoView({
@@ -133,9 +135,10 @@ class Ownintro {
         inline: "center",
       })
     }
+    this.#modal.content = this.#currentStep.content ?? ""
     this.#modal.enableBackButton(this.currentStepIndex !== 0)
     this.#modal.show()
-    let willDoSmoothMove = setTimeout(() => {
+    const willDoSmoothMove = setTimeout(() => {
       this.#modal.smoothMove(this.options.smoothMove)
       this.highlightContainerSmooth()
       if (willDoSmoothMove) clearTimeout(willDoSmoothMove)
@@ -166,3 +169,4 @@ class Ownintro {
 }
 
 window.Ownintro = Ownintro
+export default Ownintro
