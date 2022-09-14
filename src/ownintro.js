@@ -93,17 +93,21 @@ class Ownintro {
         bottom: bottomOffset,
         left: rect.left,
       })
+      return
+    }
+
     // element to close to the right
-    } else if (rect.x > document.documentElement.scrollWidth - this.#modal.element.offsetWidth) {
+    if (rect.x > document.documentElement.scrollWidth - this.#modal.element.offsetWidth) {
       const rightOffset = rect.right - (rect.width) - this.#modal.element.offsetWidth + (rect.width / 2) + this.#modal.element.offsetWidth / 2
       this.#modal.position({
         bottom: rect.bottom,
         left: rightOffset,
       })
-    // element to close to the top
-    } else {
-      this.#modal.position(rect)
+      return
     }
+
+    // element to close to the top
+    this.#modal.position(rect)
   }
 
   get #currentStep() {
