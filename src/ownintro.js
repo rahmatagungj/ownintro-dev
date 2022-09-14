@@ -87,15 +87,15 @@ class Ownintro {
 
   repositionModal(rect) {
     // element to close to the bottom
-    if (rect.y > document.documentElement.scrollHeight - 100) {
+    if (rect.y > document.documentElement.scrollHeight - this.#modal.element.offsetHeight) {
       const bottomOffset = rect.bottom - (rect.height) - this.#modal.element.offsetHeight - 25
       this.#modal.position({
         bottom: bottomOffset,
         left: rect.left,
       })
     // element to close to the right
-    } else if (rect.x > document.documentElement.scrollWidth - 200) {
-      const rightOffset = rect.right - (rect.width) - this.#modal.element.offsetWidth + (rect.width / 2) + 25
+    } else if (rect.x > document.documentElement.scrollWidth - this.#modal.element.offsetWidth) {
+      const rightOffset = rect.right - (rect.width) - this.#modal.element.offsetWidth + (rect.width / 2) + this.#modal.element.offsetWidth / 2
       this.#modal.position({
         bottom: rect.bottom,
         left: rightOffset,
