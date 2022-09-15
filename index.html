@@ -23,6 +23,7 @@
     </style>
 </head>
 <body>
+<button id="start">Click me</button>
 <h1 class="title" id="one">OwnIntro V1</h1>
 <h4 id="two">
     Kamu Cantik
@@ -63,8 +64,10 @@
     }
   )
 
-  setTimeout(() => {
-    intro.start()
-  }, 1000)
+  window.addEventListener("load", () => {
+    document.getElementById("start").addEventListener("click", () => {
+      intro.start()
+    })
+  })
 </script>
 </html>
