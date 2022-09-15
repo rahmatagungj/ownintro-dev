@@ -65,7 +65,7 @@ class Ownintro {
 
   finish() {
     document.removeEventListener("click", this.#bodyClick)
-    document.removeEventListener("resize", this.#windowResize)
+    window.removeEventListener("resize", this.#windowResize)
     this.#modal.remove()
     this.#highlightContainer.remove()
   }
