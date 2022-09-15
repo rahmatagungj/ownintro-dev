@@ -1,85 +1,83 @@
 .ownintro__highlight-container {
-    border: 1px solid #363636;
-    border-radius: .5rem;
-    box-shadow: 0 0 0 9999999px rgba(0, 0, 0, .3);
-    z-index: 9000;
-    position: absolute;
-    padding: .25rem;
-    transform: translate(-.25rem, -.25rem);
-    pointer-events: none;
-    box-sizing: content-box !important;
+  border: 1px solid #363636;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 9999999px rgba(0, 0, 0, 0.3);
+  z-index: 9000;
+  position: absolute;
+  padding: 0.25rem;
+  transform: translate(-0.25rem, -0.25rem);
+  pointer-events: none;
+  box-sizing: content-box !important;
 }
 
 .ownintro__highlight-container.hide {
-    border: none;
+  border: none;
 }
 
 .ownintro__modal {
-    top: var(--y, 50%);
-    left: var(--x, 50%);
-    background-color: white;
-    position: absolute;
-    border: 1px solid #777;
-    border-radius: .5rem;
-    max-width: 300px;
-    z-index: 9001;
-    opacity: 0;
-    word-break: break-word;
-    display: flex;
-    flex-direction: column;
-    transform: scale(var(--scale)) translate(var(--translate));
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  background-color: white;
+  position: absolute;
+  border: 1px solid #777;
+  border-radius: 0.5rem;
+  max-width: 300px;
+  z-index: 9001;
+  opacity: 0;
+  word-break: break-word;
+  display: flex;
+  flex-direction: column;
+  transform: scale(var(--scale)) translate(var(--translate));
 }
 
 .ownintro__modal.center {
-    --translate: -50%, -50%;
-    position: fixed;
-    --y: 50% !important;
-    --x: 50% !important;
+  --translate: -50%, -50%;
+  position: fixed;
+  --y: 50% !important;
+  --x: 50% !important;
 }
 
 .ownintro__modal.show {
-    --scale: 1;
-    opacity: 1;
+  --scale: 1;
+  opacity: 1;
 }
 
 .ownintro__modal.show.smooth-move,
 .ownintro__highlight-container.smooth-move {
-    transition: 150ms ease-in-out;
+  transition: 150ms ease-in-out;
 }
 
 .ownintro__modal .ownintro__modal-content {
-    padding: 1rem;
+  padding: 1rem;
 }
 
-
 .ownintro__modal .ownintro__modal-footer {
-    border-top: 1px solid #e0e0e0;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
+  border-top: 1px solid #e0e0e0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ownintro__modal .ownintro__modal-footer button {
-    cursor: pointer;
-    background-color: #F4F4F4;
-    padding: 12px 18px;
-    border: 1px solid #bdbdbd;
-    border-radius: 3px;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  padding: 12px 18px;
+  border: 1px solid #bdbdbd;
+  border-radius: 3px;
 }
 
 .ownintro__modal .close-btn {
-    margin-left: auto;
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #777;
-    transition: 150ms ease-in-out;
-    padding-right: 15px;
-    font-weight: 700;
-    padding-top: 15px;
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #777;
+  transition: 150ms ease-in-out;
+  padding-right: 15px;
+  font-weight: 700;
 }
 
 .ownintro__modal .close-btn:hover {
-    color: black;
+  color: black;
 }

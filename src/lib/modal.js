@@ -59,6 +59,10 @@ export default class Modal {
     this.#modal.classList.toggle("show", value)
   }
 
+  hide() {
+    this.show(false)
+  }
+
   center(value = true) {
     this.#modal.classList.toggle("center", value)
   }

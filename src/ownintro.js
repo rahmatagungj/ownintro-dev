@@ -21,6 +21,7 @@ class Ownintro {
         hideOnClickOutside: true,
         smoothMove: true,
         buttonFinishText: "Finish",
+        modalShowDelay: 250,
       },
       options
     )
@@ -34,7 +35,7 @@ class Ownintro {
       () => {
         this.currentStepIndex--
         this.#modal.nextButtonText = this.options.buttonNextText
-        this.#showCurrentStep()
+        this.#showCurrentStep(false)
       },
       () => {
         this.currentStepIndex++
@@ -44,7 +45,7 @@ class Ownintro {
           if (this.currentStepIndex === this.steps.length - 1) {
             this.#modal.nextButtonText = this.options.buttonFinishText
           }
-          this.#showCurrentStep()
+          this.#showCurrentStep(false)
         }
       },
       () => this.finish(),
@@ -100,39 +101,30 @@ class Ownintro {
   }
 
   repositionModal(rect) {
-    // element to close to the bottom
-    if (
-      rect.y >
-      document.documentElement.scrollHeight - this.#modal.element.offsetHeight
-    ) {
-      const bottomOffset =
-        rect.bottom - rect.height - this.#modal.element.offsetHeight - 25
+    if (this.#currentStep.position === "top") {
       this.#modal.position({
-        bottom: bottomOffset,
+        bottom: rect.top - this.#modal.element.offsetHeight - 25,
         left: rect.left,
       })
       return
     }
 
-    // element to close to the right
-    if (
-      rect.x >
-      document.documentElement.scrollWidth - this.#modal.element.offsetWidth
-    ) {
-      const rightOffset =
-        rect.right -
-        rect.width -
-        this.#modal.element.offsetWidth +
-        rect.width / 2 +
-        this.#modal.element.offsetWidth / 2
+    if (this.#currentStep.position === "right") {
       this.#modal.position({
-        bottom: rect.bottom,
-        left: rightOffset,
+        bottom: rect.bottom - this.#modal.element.offsetHeight,
+        left: rect.right + 10,
       })
       return
     }
 
-    // element to close to the top
+    if (this.#currentStep.position === "left") {
+      this.#modal.position({
+        bottom: rect.bottom - this.#modal.element.offsetHeight,
+        left: rect.left - this.#modal.element.offsetWidth - 25,
+      })
+      return
+    }
+
     this.#modal.position(rect)
   }
 
@@ -140,26 +132,35 @@ class Ownintro {
     return this.steps[this.currentStepIndex]
   }
 
-  #showCurrentStep() {
+  #showCurrentStep(isFirst = this.options.modalShowDelay) {
+    this.#modal.hide()
+    this.#modal.content = this.#currentStep.content ?? ""
     if (this.#currentStep.element == null) {
       this.#highlightContainer.classList.add("hide")
       this.#positionHighlightContainer({ x: 0, y: 0, width: 0, height: 0 })
       this.#modal.center()
     } else {
-      const rect = this.currentStepRect()
       this.#modal.center(false)
-      this.repositionModal(rect)
       this.#highlightContainer.classList.remove("hide")
-      this.#positionHighlightContainer(rect)
       this.#currentStep.element.scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "center",
       })
+      const rect = this.currentStepRect()
+      this.#positionHighlightContainer(rect)
+      this.repositionModal(rect)
+      this.repositionModal(rect)
     }
-    this.#modal.content = this.#currentStep.content ?? ""
     this.#modal.enableBackButton(this.currentStepIndex !== 0)
-    this.#modal.show()
+    const showDelayModal = setTimeout(
+      () => {
+        this.#modal.show()
+        if (showDelayModal) clearTimeout(showDelayModal)
+      },
+      isFirst ? 0 : 300
+    )
+
     const willDoSmoothMove = setTimeout(() => {
       this.#modal.smoothMove(this.options.smoothMove)
       this.highlightContainerSmooth()

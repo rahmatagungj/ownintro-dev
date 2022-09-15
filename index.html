@@ -13,12 +13,18 @@
         #two {
             position: absolute;
             top: 50%;
+            left: 50%;
             margin: 1000px 0;
         }
         #three {
             position: absolute;
             top: 50%;
             right: 10%;
+        }
+        #four {
+            position: absolute;
+            top: 50%;
+            left: 50%;
         }
     </style>
 </head>
@@ -40,6 +46,9 @@
 <div id="three">
     Dia Jelek
 </div>
+<div id="four">
+  Dia Jelek
+</div>
 </body>
 <script>
   const intro = new Ownintro([
@@ -49,12 +58,19 @@
       element: document.getElementById("one"),
     },
     {
-      content: "HehehehHehehehHehehehHeheheh HehehehHehehehHehehehHeheheh",
+      content: "HehehehHehehehHeheh ehHehehehHeheh  ehHehehehHeheh ehHeheheh HehehehHehehehHehehehHeheheh",
       element: document.getElementById("two"),
+      position: "top",
     },
       {
         content: "waokwawa iyawaowawao waowakowa  kan",
         element: document.getElementById("three"),
+        position: "left",
+      },
+      {
+        content: "waowaowa  kan waokwa waokwak",
+        element: document.getElementById("four"),
+        position: "right",
       },
   ],
     {
@@ -65,8 +81,11 @@
   )
 
   window.addEventListener("load", () => {
-    document.getElementById("start").addEventListener("click", () => {
+    setTimeout(() => {
       intro.start()
+      
+    }, 200);
+    document.getElementById("start").addEventListener("click", () => {
     })
   })
 </script>
