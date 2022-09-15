@@ -1,5 +1,5 @@
-import './ownintro.css';
-import Modal from './lib/modal.js';
+import "./ownintro.css"
+import Modal from "./lib/modal.js"
 
 /**
  * @param {Array} steps
@@ -13,29 +13,19 @@ class Ownintro {
 
   constructor(steps, options) {
     this.steps = steps
-    this.options = Object.assign({}, {
-      buttonBackText: "Back",
-      buttonNextText: "Next",
-      hideOnClickOutside: true,
-      smoothMove: true,
-      buttonFinishText: "Finish",
-    }, options)
-    this.#bodyClick = e => {
-      if (
-        e.target === this.#currentStep.element ||
-        this.#currentStep.element?.contains(e.target) ||
-        e.target.closest(".ownintro__highlight-container") != null ||
-        e.target.matches(".ownintro__modal") ||
-        e.target.closest(".ownintro__modal") != null
-      ) {
-        return
-      }
-
-      if (this.options.hideOnClickOutside) this.finish()
-    }
-    this.#windowResize = e => {
-      this.repositionHighlightContainer()
-    }
+    this.options = Object.assign(
+      {},
+      {
+        buttonBackText: "Back",
+        buttonNextText: "Next",
+        hideOnClickOutside: true,
+        smoothMove: true,
+        buttonFinishText: "Finish",
+      },
+      options
+    )
+    this.#bodyClick = (e) => this.bodyClick(e)
+    this.#windowResize = () => this.repositionHighlightContainer()
   }
 
   start() {
@@ -63,10 +53,13 @@ class Ownintro {
         buttonNextText: this.options.buttonNextText,
       }
     )
-    document.addEventListener("click", this.#bodyClick)
-    window.addEventListener('resize', this.#windowResize)
     this.#highlightContainer = this.#createHighlightContainer()
     this.#showCurrentStep()
+    const timerEvent = setTimeout(() => {
+      document.addEventListener("click", this.#bodyClick)
+      window.addEventListener("resize", this.#windowResize)
+      if (timerEvent) clearTimeout(timerEvent)
+    }, 250)
   }
 
   finish() {
@@ -80,10 +73,22 @@ class Ownintro {
     return this.#currentStep.element.getBoundingClientRect()
   }
 
-  repositionHighlightContainer() {
+  bodyClick(e) {
     if (
-      this.#currentStep.element == null
-    ) return
+      e.target === this.#currentStep.element ||
+      this.#currentStep.element?.contains(e.target) ||
+      e.target.closest(".ownintro__highlight-container") != null ||
+      e.target.matches(".ownintro__modal") ||
+      e.target.closest(".ownintro__modal") != null
+    ) {
+      return
+    }
+
+    if (this.options.hideOnClickOutside) this.finish()
+  }
+
+  repositionHighlightContainer() {
+    if (this.#currentStep.element == null) return
 
     const rect = this.currentStepRect()
     this.highlightContainerSmooth(false)
@@ -96,8 +101,12 @@ class Ownintro {
 
   repositionModal(rect) {
     // element to close to the bottom
-    if (rect.y > document.documentElement.scrollHeight - this.#modal.element.offsetHeight) {
-      const bottomOffset = rect.bottom - (rect.height) - this.#modal.element.offsetHeight - 25
+    if (
+      rect.y >
+      document.documentElement.scrollHeight - this.#modal.element.offsetHeight
+    ) {
+      const bottomOffset =
+        rect.bottom - rect.height - this.#modal.element.offsetHeight - 25
       this.#modal.position({
         bottom: bottomOffset,
         left: rect.left,
@@ -106,8 +115,16 @@ class Ownintro {
     }
 
     // element to close to the right
-    if (rect.x > document.documentElement.scrollWidth - this.#modal.element.offsetWidth) {
-      const rightOffset = rect.right - (rect.width) - this.#modal.element.offsetWidth + (rect.width / 2) + this.#modal.element.offsetWidth / 2
+    if (
+      rect.x >
+      document.documentElement.scrollWidth - this.#modal.element.offsetWidth
+    ) {
+      const rightOffset =
+        rect.right -
+        rect.width -
+        this.#modal.element.offsetWidth +
+        rect.width / 2 +
+        this.#modal.element.offsetWidth / 2
       this.#modal.position({
         bottom: rect.bottom,
         left: rightOffset,
@@ -151,7 +168,10 @@ class Ownintro {
   }
 
   highlightContainerSmooth(value) {
-    this.#highlightContainer.classList.toggle("smooth-move", value ?? this.options.smoothMove)
+    this.#highlightContainer.classList.toggle(
+      "smooth-move",
+      value ?? this.options.smoothMove
+    )
   }
 
   modalSmooth(value) {
